@@ -1,4 +1,5 @@
-import { Layout, Row, Typography } from "antd";
+import { Button, Layout, Row, Typography } from "antd";
+import { BooksAPIClient } from "../services/books-api-client";
 
 import "./styles.scss";
 
@@ -16,10 +17,23 @@ function App() {
       </Header>
 
       <Content className="app--content">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, eveniet
-        incidunt. Quod veniam qui fuga et unde numquam vero, deserunt
-        accusantium praesentium amet deleniti quidem debitis, ullam animi.
-        Debitis, aliquid.
+        <Row className="app--row" align="middle">
+          <Button
+            onClick={async () => {
+              const response = await BooksAPIClient.list({
+                pageNumber: 1,
+                pageSize: 10,
+              });
+
+              console.log(
+                "This should log the response from the Books API",
+                response
+              );
+            }}
+          >
+            Show me first books page
+          </Button>
+        </Row>
       </Content>
     </Layout>
   );
