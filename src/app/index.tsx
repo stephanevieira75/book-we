@@ -1,4 +1,5 @@
 import { Button, Layout, Row, Typography } from "antd";
+import { useBooksList } from "../hooks/use-books-list";
 import { BooksAPIClient } from "../services/books-api-client";
 
 import "./styles.scss";
@@ -6,6 +7,7 @@ import "./styles.scss";
 const { Header, Content } = Layout;
 const { Title } = Typography;
 function App() {
+  const { books } = useBooksList();
   return (
     <Layout className="app--container">
       <Header className="app--header">
@@ -31,7 +33,15 @@ function App() {
               );
             }}
           >
-            Show me first books page
+            Show me first books page using the Books API client
+          </Button>
+
+          <Button
+            onClick={() =>
+              console.log("This is the current books list state", books)
+            }
+          >
+            Show me the books list state
           </Button>
         </Row>
       </Content>
