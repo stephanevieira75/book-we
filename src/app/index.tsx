@@ -1,7 +1,7 @@
 import { Layout, Row, Typography } from "antd";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import { BooksList } from "../views";
+import { BookDescription, BooksList } from "../views";
 
 import "./styles.scss";
 
@@ -22,6 +22,7 @@ function App() {
         <Content className="app--content">
           <Routes>
             <Route path="/" element={<BooksList />} />
+            <Route path="/book/:id" element={<BookDescription />} />
           </Routes>
         </Content>
       </Layout>

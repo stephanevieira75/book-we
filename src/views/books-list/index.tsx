@@ -1,10 +1,13 @@
 import { Row, Table, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import { useBooksList } from "../../hooks/use-books-list";
 import { Book } from "../../types/book";
 
 const { Title, Link } = Typography;
 export function BooksList() {
+  const navigateTo = useNavigate();
+
   const {
     books,
     currentPagination,
@@ -42,10 +45,15 @@ export function BooksList() {
         dataSource={dataSource}
         columns={columns}
         loading={isLoadingBooks}
+        // We do not want to use the pagination component, we use the nextPage function instead
         pagination={false}
         onRow={(record) => ({
           onClick: () => {
-            // TODO: navigate to the book details page
+            // Dirty hack to get the book unique id from the url
+            navigateTo(`/book/${record.url.split("/")[5]}`, {
+              // Finally we add the book url to the state
+              state: { bookUrl: record.url },
+            });
           },
         })}
       />
