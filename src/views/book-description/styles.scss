@@ -1,0 +1,12 @@
+.characters-list--container {
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  width: 80%;
+  overflow: auto;
+
+  .characters-list-link--row {
+    background-color: #fff;
+    padding: 8px 0;
+  }
+}

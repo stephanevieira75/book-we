@@ -1,9 +1,14 @@
-import { Button, Descriptions, Row } from "antd";
+import { Button, Descriptions, Row, Typography } from "antd";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { CharacterCard } from "../../components";
 
 import { useBook } from "../../hooks/use-book";
+import { useCharactersList } from "../../hooks/use-characters-list";
 
+import "./styles.scss";
+
+const { Link } = Typography;
 const { Item } = Descriptions;
 const labelStyle = { fontWeight: "bold" };
 
@@ -13,6 +18,11 @@ export function BookDescription() {
 
   // Get the book url from the location state
   const { book } = useBook((location.state as { bookUrl: string }).bookUrl);
+
+  // Get the characters list using the book characters url list
+  const { charactersList, nextCharacters } = useCharactersList(
+    book?.characters || []
+  );
 
   return (
     <>
@@ -48,7 +58,25 @@ export function BookDescription() {
           {book?.numberOfPages}
         </Item>
 
-        {/* TODO: Display the characters names list with a load more button */}
+        <Item label="characters" labelStyle={labelStyle} span={3}>
+          {charactersList?.length ? (
+            <div className="characters-list--container">
+              {charactersList.map((character) => (
+                <CharacterCard key={character.url} character={character} />
+              ))}
+
+              <Row
+                className="characters-list-link--row"
+                align="middle"
+                justify="center"
+              >
+                <Link onClick={() => nextCharacters()}>Load more</Link>
+              </Row>
+            </div>
+          ) : (
+            "No characters provided"
+          )}
+        </Item>
       </Descriptions>
     </>
   );
